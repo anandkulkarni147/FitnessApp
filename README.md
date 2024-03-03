@@ -1,2 +1,2 @@
 # FitnessApp
-Fitness App and Workout Plans Recommendations
+Fitness and Workout Plans Recommendations App
