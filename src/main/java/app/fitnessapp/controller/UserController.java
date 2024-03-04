@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.Arrays;
+import static app.fitnessapp.repository.HealthHistoryRepository.healthHistory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
-import static app.fitnessapp.repository.HealthHistoryRepository.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -27,9 +27,39 @@ public class UserController {
         }
     }
 
-    @GetMapping("/healthHistory")
-    public ResponseEntity<List<String []>> getHealthHistory(@PathVariable Long userId) {
-        return new ResponseEntity<>(Arrays.asList(medicalEvents, medicalConditions, treatments, allergies), HttpStatus.OK);
+    @PostMapping("/{userId}/health-history")
+    public ResponseEntity<String> saveUserHealthHistory(@PathVariable Long userId, @RequestBody String healthHistoryJson) {
+        try {
+            userService.saveUserHealthHistory(userId, healthHistoryJson);
+            return ResponseEntity.ok().body("Health history saved successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save health history");
+        }
+    }
+
+    @GetMapping("/{userId}/health-history")
+    public ResponseEntity<String> getUserHealthHistory(@PathVariable Long userId) {
+        try {
+            String healthHistoryJson = userService.getUserHealthHistoryJson(userId);
+            return ResponseEntity.ok().body(healthHistoryJson);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to retrieve health history");
+        }
+    }
+
+    @GetMapping("/health-history")
+    public ResponseEntity<String> getHealthHistory() {
+        try {
+            List<String> history = healthHistory();
+            ObjectMapper objectMapper = new ObjectMapper();
+            String healthHistoryJson =  objectMapper.writeValueAsString(history);
+            return ResponseEntity.ok().body(healthHistoryJson);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to retrieve health history");
+        }
     }
 
     @PostMapping("/{userId}/details")

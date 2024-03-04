@@ -1,5 +1,10 @@
 package app.fitnessapp.repository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class HealthHistoryRepository {
 
     public static String[] medicalEvents = {
@@ -44,5 +49,14 @@ public class HealthHistoryRepository {
             "materialAllergies",
             "plantOrChemicalAllergies"
     };
+
+    public static List<String> healthHistory() {
+        List<String> healthHistory = new ArrayList<>();
+        Collections.addAll(healthHistory, medicalEvents);
+        Collections.addAll(healthHistory, medicalConditions);
+        Collections.addAll(healthHistory, allergies);
+        Collections.addAll(healthHistory, treatments);
+        return healthHistory;
+    }
 
 }

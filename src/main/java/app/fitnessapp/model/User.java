@@ -2,8 +2,6 @@ package app.fitnessapp.model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "Users")
@@ -29,11 +27,10 @@ public class User {
     private String city;
     @Column(name = "state")
     private String state;
-
     @Column(name = "fitnessGoals")
     private String fitnessGoals;
-    @Column(name = "healthHistory")
-    private String [] healthHistory;
+    @Column(columnDefinition = "TEXT")
+    private String healthHistory;
 
     public int getWeight() {
         return weight;
@@ -75,11 +72,11 @@ public class User {
         this.fitnessGoals = fitnessGoals;
     }
 
-    public List<String> getHealthHistory() {
+    public String getHealthHistory() {
         return healthHistory;
     }
 
-    public void setHealthHistory(List<String> healthHistory) {
+    public void setHealthHistory(String healthHistory) {
         this.healthHistory = healthHistory;
     }
 

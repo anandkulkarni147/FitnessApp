@@ -4,11 +4,8 @@ import app.fitnessapp.model.User;
 import app.fitnessapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import javax.mail.MessagingException;
-import java.util.Random;
+import javax.transaction.Transactional;
 import org.springframework.mail.javamail.JavaMailSender;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +22,24 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findById(userId);
         return userOptional.orElse(null);
     }
+
+    @Override
+    @Transactional
+    public void saveUserHealthHistory(Long userId, String healthHistoryJson) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setHealthHistory(healthHistoryJson);
+        userRepository.save(user);
+    }
+
+    @Override
+    public String getUserHealthHistoryJson(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getHealthHistory();
+    }
+
     @Override
     public void saveUserDetails(Long userId, User userDetails) {
         // Fetch the user from the database
