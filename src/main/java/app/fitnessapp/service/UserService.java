@@ -1,8 +1,7 @@
 package app.fitnessapp.service;
-
 import app.fitnessapp.model.User;
 
 public interface UserService {
-    User registerUser(User user);
-    User loginUser(String username);
+    User getUserById(Long userId);
+    void saveUserDetails(Long userId, User userDetails);
 }
