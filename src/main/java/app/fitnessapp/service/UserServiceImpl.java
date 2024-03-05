@@ -19,43 +19,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        return userOptional.orElse(null);
-    }
-
-    @Override
-    @Transactional
-    public void saveUserHealthHistory(Long userId, String healthHistoryJson) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        user.setHealthHistory(healthHistoryJson);
-        userRepository.save(user);
-    }
-
-    @Override
-    public String getUserHealthHistoryJson(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        return user.getHealthHistory();
+        return userRepository.findByUserId(userId);
     }
 
     @Override
     public void saveUserDetails(Long userId, User userDetails) {
-        // Fetch the user from the database
-        User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // Update the user details
-        existingUser.setFirstName(userDetails.getFirstName());
-        existingUser.setLastName(userDetails.getLastName());
-        existingUser.setEmail(userDetails.getEmail());
-        // Update other details as needed
-
-        // Save the updated user to the database
-        userRepository.save(existingUser);
+        userRepository.save(userDetails);
     }
-
-
-
 }
