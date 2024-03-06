@@ -1,50 +1,54 @@
 package app.fitnessapp.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "User")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "userId")
+    private Long userId;
     @Column(name = "firstName")
     private String firstName;
     @Column(name = "lastName")
     private String lastName;
     @Column(name = "email")
     private String email;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     @Column(name = "birthdate")
     private Date birthdate;
     @Column(name = "country")
     private String country;
-    @Column(name = "weight")
-    private int weight;
-    @Column(name = "height")
-    private double height;
     @Column(name = "city")
     private String city;
     @Column(name = "state")
     private String state;
+    @Column(name = "weight")
+    private String weight;
+    @Column(name = "height")
+    private String height;
     @Column(name = "fitnessGoals")
     private String fitnessGoals;
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "healthHistory", columnDefinition = "TEXT")
     private String healthHistory;
 
-    public int getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
-    public double getHeight() {
+    public String getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
@@ -80,12 +84,12 @@ public class User {
         this.healthHistory = healthHistory;
     }
 
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {

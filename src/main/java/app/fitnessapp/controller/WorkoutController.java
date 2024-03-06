@@ -15,12 +15,12 @@ import java.util.List;
 @RequestMapping("/api/workouts")
 public class WorkoutController {
 
-    @Autowired
-    private WorkoutService workoutService;
-
-    @GetMapping("/plans")
-    public ResponseEntity<List<WorkoutPlan>> getWorkoutPlans(@RequestParam String username) {
-        List<WorkoutPlan> plans = workoutService.getWorkoutPlans(username);
-        return ResponseEntity.ok(plans);
-    }
+//    @Autowired
+//    private WorkoutService workoutService;
+//
+//    @GetMapping("/plans")
+//    public ResponseEntity<List<WorkoutPlan>> getWorkoutPlans(@RequestParam String username) {
+//        List<WorkoutPlan> plans = workoutService.getWorkoutPlans(username);
+//        return ResponseEntity.ok(plans);
+//    }
 }

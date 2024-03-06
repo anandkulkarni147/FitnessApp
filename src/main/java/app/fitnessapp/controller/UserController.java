@@ -2,9 +2,11 @@ package app.fitnessapp.controller;
 
 import app.fitnessapp.model.HealthHistory;
 import app.fitnessapp.model.User;
+import app.fitnessapp.repository.UserRepository;
 import app.fitnessapp.service.EmailService;
 import app.fitnessapp.service.OTPService;
 import app.fitnessapp.service.UserService;
+import app.fitnessapp.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +20,13 @@ import java.util.Map;
 public class UserController {
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private EmailService emailService;
@@ -30,7 +35,7 @@ public class UserController {
     private OTPService otpService;
 
     @PostMapping("/sendotp")
-    public ResponseEntity<String> sendOTP(@RequestBody String email) {
+    public ResponseEntity<String> sendOTP(String email) {
         String otp = otpService.generateOTP();
         otpService.storeOTP(email, otp);
         emailService.sendOTP(email, otp);
@@ -38,12 +43,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody Map<String, String> loginDetails) {
-        String email = loginDetails.get("email");
-        String otp = loginDetails.get("otp");
+    public ResponseEntity<String> loginUser(@RequestParam("email") String email, @RequestParam("otp") String otp) {
+        User existingUser = userRepository.findByEmail(email);
         if (otpService.verifyOTP(email, otp)) {
-            // OTP verification successful
-            return new ResponseEntity<>("Login successful", HttpStatus.OK);
+            if (existingUser != null) {
+                // OTP verification successful
+                return new ResponseEntity<>("Login successful", HttpStatus.OK);
+            } else {
+                // User does not exist
+                return new ResponseEntity<>("Invalid email or OTP", HttpStatus.NOT_FOUND);
+            }
         } else {
             // OTP verification failed
             return new ResponseEntity<>("Invalid OTP", HttpStatus.UNAUTHORIZED);
@@ -60,14 +69,10 @@ public class UserController {
         }
     }
 
-    @PostMapping("/{userId}/details")
-    public ResponseEntity<String> saveUserDetails(@PathVariable Long userId, @RequestBody User userDetails) {
-        try {
-            userService.saveUserDetails(userId, userDetails);
-            return new ResponseEntity<>("User details saved successfully", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Failed to save user details", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @PostMapping("/users")
+    public ResponseEntity<User> saveUserDetails(@RequestBody User userDetails) {
+        User savedUser = userRepository.save(userDetails);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
     @GetMapping("/{userId}/healthhistory")
