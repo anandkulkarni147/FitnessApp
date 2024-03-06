@@ -2,6 +2,8 @@ package app.fitnessapp.controller;
 
 import app.fitnessapp.model.HealthHistory;
 import app.fitnessapp.model.User;
+import app.fitnessapp.service.EmailService;
+import app.fitnessapp.service.OTPService;
 import app.fitnessapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,8 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.Map;
+
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
@@ -18,6 +22,33 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private OTPService otpService;
+
+    @PostMapping("/sendotp")
+    public ResponseEntity<String> sendOTP(@RequestBody String email) {
+        String otp = otpService.generateOTP();
+        otpService.storeOTP(email, otp);
+        emailService.sendOTP(email, otp);
+        return new ResponseEntity<>("OTP sent successfully", HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody Map<String, String> loginDetails) {
+        String email = loginDetails.get("email");
+        String otp = loginDetails.get("otp");
+        if (otpService.verifyOTP(email, otp)) {
+            // OTP verification successful
+            return new ResponseEntity<>("Login successful", HttpStatus.OK);
+        } else {
+            // OTP verification failed
+            return new ResponseEntity<>("Invalid OTP", HttpStatus.UNAUTHORIZED);
+        }
+    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {

@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/recommendations")
 public class RecommendationController {
 
-    @Autowired
-    private RecommendationService recommendationService;
-
-    @GetMapping("/generate")
-    public ResponseEntity<Recommendation> generateRecommendation(@RequestParam String username) {
-        Recommendation recommendation = recommendationService.generateRecommendation(username);
-        return ResponseEntity.ok(recommendation);
-    }
+//    @Autowired
+//    private RecommendationService recommendationService;
+//
+//    @GetMapping("/generate")
+//    public ResponseEntity<Recommendation> generateRecommendation(@RequestParam String username) {
+//        Recommendation recommendation = recommendationService.generateRecommendation(username);
+//        return ResponseEntity.ok(recommendation);
+//    }
 }

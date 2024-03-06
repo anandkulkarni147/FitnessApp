@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OTP Authentication</title>
+  <script>
+    // Function to generate a random OTP
+    function generateOTP() {
+      var digits = '0123456789';
+      var OTP = '';
+      for (var i = 0; i < 6; i++) {
+        OTP += digits[Math.floor(Math.random() * 10)];
+      }
+      return OTP;
+    }
+
+    // Function to send OTP to the user (for example, via email or SMS)
+    function sendOTP(email, OTP) {
+      // Send OTP logic here (e.g., via AJAX to backend)
+      console.log('Sending OTP ' + OTP + ' to ' + email);
+    }
+
+    // Function to handle OTP verification
+    function verifyOTP(enteredOTP) {
+      var generatedOTP = localStorage.getItem('OTP');
+      if (enteredOTP === generatedOTP) {
+        alert('OTP Verified Successfully!');
+        // Proceed with login or registration logic
+      } else {
+        alert('Invalid OTP! Please try again.');
+      }
+    }
+
+    // Function to handle form submission for registration
+    function registerUser() {
+      var email = document.getElementById('email').value;
+      var OTP = generateOTP();
+      localStorage.setItem('OTP', OTP); // Store OTP in localStorage for verification
+      sendOTP(email, OTP); // Send OTP to the user
+      // Proceed with registration form submission
+    }
+
+    // Function to handle form submission for login
+    function loginUser() {
+      var enteredOTP = document.getElementById('otp').value;
+      verifyOTP(enteredOTP); // Verify entered OTP
+      // Proceed with login form submission
+    }
+  </script>
+</head>
+<body>
+<h2>User Registration</h2>
+<form id="registrationForm" onsubmit="registerUser(); return false;">
+  <label for="email">Email:</label>
+  <input type="email" id="email" required>
+  <button type="submit">Register</button>
+</form>
+</body>
