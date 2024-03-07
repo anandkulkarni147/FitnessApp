@@ -69,15 +69,15 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("/{userId}/healthhistory")
-    public ResponseEntity<String> getUserMedicalData(@PathVariable Long userId) throws Exception {
-        User user = userService.getUserById(userId);
-        return new ResponseEntity<>(objectMapper.writeValueAsString(user.getHealthHistory()), HttpStatus.OK);
-    }
+//    @GetMapping("/{userId}/healthhistory")
+//    public ResponseEntity<String> getUserMedicalData(@PathVariable Long userId) throws Exception {
+//        User user = userService.getUserById(userId);
+//        return new ResponseEntity<>(objectMapper.writeValueAsString(user.getHealthHistory()), HttpStatus.OK);
+//    }
 
-    @GetMapping("/healthhistory")
-    public ResponseEntity<String> getMedicalData(@PathVariable Long id) throws Exception {
-        HealthHistory healthHistory = new HealthHistory();
-        return new ResponseEntity<>(objectMapper.writeValueAsString(healthHistory.getHealthHistoryMap()), HttpStatus.OK);
-    }
+//    @GetMapping("/healthhistory")
+//    public ResponseEntity<String> getMedicalData(@PathVariable Long id) throws Exception {
+//        HealthHistory healthHistory = new HealthHistory();
+//        return new ResponseEntity<>(objectMapper.writeValueAsString(healthHistory.getHealthHistoryMap()), HttpStatus.OK);
+//    }
 }

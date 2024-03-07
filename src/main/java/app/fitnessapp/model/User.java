@@ -34,9 +34,6 @@ public class User {
     @Column(name = "heightIn")
     private String heightIn;
 
-    @Column(name = "healthHistory", columnDefinition = "TEXT")
-    private String healthHistory;
-
     public User() {
 
     }
@@ -91,14 +88,6 @@ public class User {
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public String getHealthHistory() {
-        return healthHistory;
-    }
-
-    public void setHealthHistory(String healthHistory) {
-        this.healthHistory = healthHistory;
     }
 
     public Long getUserId() {
