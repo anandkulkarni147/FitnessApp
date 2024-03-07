@@ -63,10 +63,10 @@ public class UserController {
         }
     }
 
-    @PostMapping("/users")
-    public ResponseEntity<String> saveUserDetails(@RequestBody User userDetails) {
-        userService.saveUserDetails(userDetails);
-        return new ResponseEntity<>("Added user successfully", HttpStatus.CREATED);
+    @GetMapping("/userProfile")
+    public ResponseEntity<User> saveUserDetails(@RequestParam("email") String email) {
+        User user = userService.getUserByEmail(email);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}/healthhistory")

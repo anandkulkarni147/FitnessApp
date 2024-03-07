@@ -3,7 +3,6 @@ package app.fitnessapp.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "User")
@@ -31,8 +30,7 @@ public class User {
     private String weight;
     @Column(name = "height")
     private String height;
-    @Column(name = "fitnessGoals")
-    private String fitnessGoals;
+
     @Column(name = "healthHistory", columnDefinition = "TEXT")
     private String healthHistory;
 
@@ -49,7 +47,6 @@ public class User {
         this.state = state;
         this.weight = weight;
         this.height = height;
-        this.fitnessGoals = fitnessGoals;
         this.healthHistory = healthHistory;
     }
 
@@ -83,14 +80,6 @@ public class User {
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public String getFitnessGoals() {
-        return fitnessGoals;
-    }
-
-    public void setFitnessGoals(String fitnessGoals) {
-        this.fitnessGoals = fitnessGoals;
     }
 
     public String getHealthHistory() {
