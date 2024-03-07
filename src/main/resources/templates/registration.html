@@ -181,7 +181,7 @@
   </div>
 
   <!-- Submit Button -->
-  <button type="submit" onclick="register()">Register</button>
+  <button type="submit" onclick="registerUser()">Register</button>
 </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -197,37 +197,45 @@
     }
     return selectedValues;
   }
-  function register() {
-    var email = $('#email').val();
-    var firstname = $('#firstName').val();
-    var lastname = $('#lastName').val();
-    var city = $('#city').val();
-    var state = $('#state').val();
-    var country = $('#country').val();
-    var birthdate = $('#birthdate').val();
-    var weight = $('#weight').val();
-    var height = $('#height').val();
-    var fitnessGoals = $('#fitnessGoals').val();
+  function registerUser() {
+
     var medicalEvents = getSelectedValues('medicalEvents');
     var medicalConditions = getSelectedValues('medicalConditions');
     var treatments = getSelectedValues('treatments');
     var allergies = getSelectedValues('allergies');
 
-    // Concatenate selected values into a single string
-    var medicalData = medicalEvents.join(',') + ';' +
-            medicalConditions.join(',') + ';' +
-            treatments.join(',') + ';' +
-            allergies.join(',');
+    var formData = {
+      email : $('#email').val(),
+      firstname : $('#firstName').val(),
+      lastname : $('#lastName').val(),
+      city : $('#city').val(),
+      state : $('#state').val(),
+      country : $('#country').val(),
+      birthdate : $('#birthdate').val(),
+      weight : $('#weight').val(),
+      height : $('#height').val(),
+      fitnessGoals : $('#fitnessGoals').val(),
 
+      // Concatenate selected values into a single string
+      medicalData: medicalEvents.join(',') + ',' +
+              medicalConditions.join(',') + ',' +
+              treatments.join(',') + ',' +
+              allergies.join(',')
+    }
 
-    $.post('/api/register', { firstname: firstname, lastname : lastname, email: email, birthdate: birthdate, country:country, city:city, state:state, weight:weight, height:height, fitnessGoals: fitnessGoals, medicalData: medicalData })
-            .done(function(response) {
-              alert('Register successful!');
-              // Redirect or perform actions upon successful login
-            })
-            .fail(function(error) {
-              alert('Register failed.');
-            });
+    $.ajax({
+      url: '/api/register',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(formData),
+      success: function(response) {
+        alert('Register successful!');
+        // Redirect or perform actions upon successful registration
+      },
+      error: function(error) {
+        alert('Register failed.');
+      }
+    });
   }
 </script>
 

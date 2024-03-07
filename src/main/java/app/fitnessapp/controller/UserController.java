@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api")
 public class UserController {
 
@@ -53,23 +54,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestParam("firstname") String firstName, @RequestParam("lastname") String lastname, @RequestParam("email") String email, @RequestParam("birthdate") String birthdate, @RequestParam("country") String country, @RequestParam("city") String city, @RequestParam("state") String state, @RequestParam("weight") String weight, @RequestParam("height") String height, @RequestParam("fitnessGoals") String fitnessGoals, @RequestParam("medicalData") String medicalData) {
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
         try {
-            User user = new User(firstName, lastname, email, birthdate, country, city, state, weight, height, fitnessGoals, medicalData);
             userService.saveUserDetails(user);
             return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to register user", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
-        User user = userService.getUserById(userId);
-        if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
