@@ -20,7 +20,7 @@ public class User {
     private String email;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     @Column(name = "birthdate")
-    private Date birthdate;
+    private String birthdate;
     @Column(name = "country")
     private String country;
     @Column(name = "city")
@@ -35,6 +35,23 @@ public class User {
     private String fitnessGoals;
     @Column(name = "healthHistory", columnDefinition = "TEXT")
     private String healthHistory;
+
+    public User() {
+
+    }
+    public User(String firstName, String lastName, String email, String birthdate, String country, String city, String state, String weight, String height, String fitnessGoals, String healthHistory) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.birthdate = birthdate;
+        this.country = country;
+        this.city = city;
+        this.state = state;
+        this.weight = weight;
+        this.height = height;
+        this.fitnessGoals = fitnessGoals;
+        this.healthHistory = healthHistory;
+    }
 
     public String getWeight() {
         return weight;
@@ -116,11 +133,11 @@ public class User {
         this.email = email;
     }
 
-    public Date getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 

@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
+
+    User getUserByEmail(String email);
     User getUserById(Long userId);
-    void saveUserDetails(Long userId, User userDetails);
+    void saveUserDetails(User userDetails);
 
 }

@@ -14,7 +14,6 @@ public class HealthHistory {
                 "accidentsOrInjuries",
                 "majorIllnesses",
                 "pregnancyAndChildbirth",
-                "emergencyRoomVisits",
                 "routineCheckUpsOrScreenings"
         };
 
@@ -26,7 +25,6 @@ public class HealthHistory {
                 "infectiousDiseases",
                 "neurologicalDisorders",
                 "respiratoryConditions",
-                "skinConditions"
         };
 
         // Treatments
@@ -37,7 +35,6 @@ public class HealthHistory {
                 "physicalTherapySessions",
                 "rehabilitationPrograms",
                 "counselingOrPsychotherapySessions",
-                "alternativeOrComplementaryTherapies"
         };
 
         // Allergies
@@ -47,7 +44,6 @@ public class HealthHistory {
                 "environmentalAllergies",
                 "latexAllergy",
                 "insectStingAllergies",
-                "materialAllergies",
                 "plantOrChemicalAllergies"
         };
 

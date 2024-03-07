@@ -10,51 +10,226 @@
 
 <h1>User Details</h1>
 
-<form th:action="@{'/api/register'}" method="post">
+<form id="registerForm" method="post">
   <div>
     <label>First Name:</label>
-    <input type="text" name="firstName" th:value="${user.firstName}" />
+    <input type="text" name="firstName" id="firstName" />
   </div>
   <div>
     <label>Last Name:</label>
-    <input type="text" name="lastName" th:value="${user.lastName}" />
+    <input type="text" name="lastName" id="lastName" />
   </div>
   <div>
     <label>Email:</label>
-    <input type="text" name="email" th:value="${user.email}" />
+    <input type="text" name="email" id="email" />
   </div>
   <div>
     <label>Birthdate:</label>
-    <input type="date" name="birthdate" th:value="${user.birthdate}" />
+    <input type="date" name="birthdate" id="birthdate" />
   </div>
   <div>
     <label>Country:</label>
-    <input type="text" name="country" th:value="${user.country}" />
+    <input type="text" name="country" id="country" />
   </div>
   <div>
     <label>Weight (kg):</label>
-    <input type="text" name="weight" th:value="${user.weight}" />
+    <input type="text" name="weight" id="weight"/>
   </div>
   <div>
     <label>Height (cm):</label>
-    <input type="text" name="height" th:value="${user.height}" />
+    <input type="text" name="height" id="height" />
   </div>
   <div>
     <label>City:</label>
-    <input type="text" name="city" th:value="${user.city}" />
+    <input type="text" name="city" id="city"/>
   </div>
   <div>
     <label>State:</label>
-    <input type="text" name="state" th:value="${user.state}" />
+    <input type="text" name="state" id="state"/>
   </div>
   <div>
     <label>Fitness Goals:</label>
-    <input type="text" name="fitnessGoals" th:value="${user.fitnessGoals}" />
+    <input type="text" name="fitnessGoals" id="fitnessGoals" />
+  </div>
+
+  <div>
+    <h2>Medical Events</h2>
+    <ul>
+      <li>
+        <input type="checkbox" name="medicalEvents" value="hospitalizations">
+        <label>Hospitalizations</label>
+      </li>
+      <li>
+        <input type="checkbox" name="medicalEvents" value="surgeries">
+        <label>Surgeries</label>
+      </li>
+      <li>
+        <input type="checkbox" name="medicalEvents" value="accidentsOrInjuries">
+        <label>Accidents or Injuries</label>
+      </li>
+      <li>
+        <input type="checkbox" name="medicalEvents" value="majorIllnesses">
+        <label>Major Illness</label>
+      </li>
+      <li>
+        <input type="checkbox" name="medicalEvents" value="pregnancyAndChildbirth">
+        <label>Pregnancy and Child birth</label>
+      </li>
+      <li>
+        <input type="checkbox" name="medicalEvents" value="routineCheckUpsOrScreenings">
+        <label>Checkups</label>
+      </li>
+      <!-- Add other medical events -->
+    </ul>
+  </div>
+
+  <div>
+    <h2>Medical Conditions</h2>
+    <ul>
+      <li>
+        <input type="checkbox" name="medicalConditions" value="chronicDiseases">
+        <label>Chronic Diseases</label>
+      </li>
+      <li>
+        <input type="checkbox" name="medicalConditions" value="mentalHealthConditions">
+        <label>Mental Health Conditions</label>
+      </li>
+      <li>
+        <input type="checkbox" name="medicalConditions" value="autoimmuneDisorders">
+        <label>Autoimmune Disorders</label>
+      </li>
+      <li>
+        <input type="checkbox" name="medicalConditions" value="infectiousDiseases">
+        <label>Infections</label>
+      </li>
+      <li>
+        <input type="checkbox" name="medicalConditions" value="infectiousDiseases">
+        <label>Infections</label>
+      </li>
+      <li>
+        <input type="checkbox" name="medicalConditions" value="neurologicalDisorders">
+        <label>Neurological Disorders</label>
+      </li>
+      <li>
+        <input type="checkbox" name="medicalConditions" value="respiratoryConditions">
+        <label>Respiratory Conditions</label>
+      </li>
+      <!-- Add other medical conditions -->
+    </ul>
+  </div>
+
+  <div>
+    <h2>Treatments</h2>
+    <ul>
+      <li>
+        <input type="checkbox" name="treatments" value="prescriptionMedications">
+        <label>Prescription Medications</label>
+      </li>
+      <li>
+        <input type="checkbox" name="treatments" value="overTheCounterMedications">
+        <label>Over-the-Counter Medications</label>
+      </li>
+      <li>
+        <input type="checkbox" name="treatments" value="surgicalProcedures">
+        <label>Surgical Procedures</label>
+      </li>
+      <li>
+        <input type="checkbox" name="treatments" value="physicalTherapySessions">
+        <label>Physical Therapy Sessions</label>
+      </li>
+      <li>
+        <input type="checkbox" name="treatments" value="rehabilitationPrograms">
+        <label>Rehabilitation Programs</label>
+      </li>
+      <li>
+        <input type="checkbox" name="treatments" value="counselingOrPsychotherapySessions">
+        <label>Counseling Or Psychotherapy Sessions</label>
+      </li>
+      <!-- Add other treatments -->
+    </ul>
+  </div>
+
+  <div>
+    <h2>Allergies</h2>
+    <ul>
+      <li>
+        <input type="checkbox" name="allergies" value="foodAllergies">
+        <label>Food Allergies</label>
+      </li>
+      <li>
+        <input type="checkbox" name="allergies" value="medicationAllergies">
+        <label>Medication Allergies</label>
+      </li>
+      <li>
+        <input type="checkbox" name="allergies" value="environmentalAllergies">
+        <label>Environmental Allergies</label>
+      </li>
+      <li>
+        <input type="checkbox" name="allergies" value="latexAllergy">
+        <label>Latex Allergy</label>
+      </li>
+      <li>
+        <input type="checkbox" name="allergies" value="insectStingAllergies">
+        <label>InsectSting Allergies</label>
+      </li>
+      <li>
+        <input type="checkbox" name="allergies" value="plantOrChemicalAllergies">
+        <label>Plant Or Chemical Allergies</label>
+      </li>
+      <!-- Add other allergies -->
+    </ul>
   </div>
 
   <!-- Submit Button -->
-  <button type="submit">Update</button>
+  <button type="submit" onclick="register()">Register</button>
 </form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+  function getSelectedValues(name) {
+    var checkboxes = document.getElementsByName(name);
+    var selectedValues = [];
+    for (var i = 0; i < checkboxes.length; i++) {
+      if (checkboxes[i].checked) {
+        selectedValues.push(checkboxes[i].value);
+      }
+    }
+    return selectedValues;
+  }
+  function register() {
+    var email = $('#email').val();
+    var firstname = $('#firstName').val();
+    var lastname = $('#lastName').val();
+    var city = $('#city').val();
+    var state = $('#state').val();
+    var country = $('#country').val();
+    var birthdate = $('#birthdate').val();
+    var weight = $('#weight').val();
+    var height = $('#height').val();
+    var fitnessGoals = $('#fitnessGoals').val();
+    var medicalEvents = getSelectedValues('medicalEvents');
+    var medicalConditions = getSelectedValues('medicalConditions');
+    var treatments = getSelectedValues('treatments');
+    var allergies = getSelectedValues('allergies');
+
+    // Concatenate selected values into a single string
+    var medicalData = medicalEvents.join(',') + ';' +
+            medicalConditions.join(',') + ';' +
+            treatments.join(',') + ';' +
+            allergies.join(',');
+
+
+    $.post('/api/register', { firstname: firstname, lastname : lastname, email: email, birthdate: birthdate, country:country, city:city, state:state, weight:weight, height:height, fitnessGoals: fitnessGoals, medicalData: medicalData })
+            .done(function(response) {
+              alert('Register successful!');
+              // Redirect or perform actions upon successful login
+            })
+            .fail(function(error) {
+              alert('Register failed.');
+            });
+  }
+</script>
 
 <!-- Add any additional HTML or styling here -->
 

@@ -2,31 +2,24 @@ package app.fitnessapp.controller;
 
 import app.fitnessapp.model.HealthHistory;
 import app.fitnessapp.model.User;
-import app.fitnessapp.repository.UserRepository;
 import app.fitnessapp.service.EmailService;
 import app.fitnessapp.service.OTPService;
 import app.fitnessapp.service.UserService;
-import app.fitnessapp.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/api")
 public class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Autowired
-    private UserServiceImpl userService;
 
     @Autowired
     private EmailService emailService;
@@ -44,7 +37,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestParam("email") String email, @RequestParam("otp") String otp) {
-        User existingUser = userRepository.findByEmail(email);
+        User existingUser = userService.getUserByEmail(email);
         if (otpService.verifyOTP(email, otp)) {
             if (existingUser != null) {
                 // OTP verification successful
@@ -59,6 +52,17 @@ public class UserController {
         }
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestParam("firstname") String firstName, @RequestParam("lastname") String lastname, @RequestParam("email") String email, @RequestParam("birthdate") String birthdate, @RequestParam("country") String country, @RequestParam("city") String city, @RequestParam("state") String state, @RequestParam("weight") String weight, @RequestParam("height") String height, @RequestParam("fitnessGoals") String fitnessGoals, @RequestParam("medicalData") String medicalData) {
+        try {
+            User user = new User(firstName, lastname, email, birthdate, country, city, state, weight, height, fitnessGoals, medicalData);
+            userService.saveUserDetails(user);
+            return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to register user", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         User user = userService.getUserById(userId);
@@ -70,9 +74,9 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> saveUserDetails(@RequestBody User userDetails) {
-        User savedUser = userRepository.save(userDetails);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    public ResponseEntity<String> saveUserDetails(@RequestBody User userDetails) {
+        userService.saveUserDetails(userDetails);
+        return new ResponseEntity<>("Added user successfully", HttpStatus.CREATED);
     }
 
     @GetMapping("/{userId}/healthhistory")
