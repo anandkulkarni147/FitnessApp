@@ -28,10 +28,10 @@ public class User {
     private String state;
     @Column(name = "weight")
     private String weight;
-    @Column(name = "height")
+    @Column(name = "heightFt")
     private String heightFt;
 
-    @Column(name = "height")
+    @Column(name = "heightIn")
     private String heightIn;
 
     @Column(name = "healthHistory", columnDefinition = "TEXT")
