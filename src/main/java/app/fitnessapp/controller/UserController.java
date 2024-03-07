@@ -1,15 +1,17 @@
 package app.fitnessapp.controller;
 
-import app.fitnessapp.model.HealthHistory;
 import app.fitnessapp.model.User;
 import app.fitnessapp.service.EmailService;
 import app.fitnessapp.service.OTPService;
 import app.fitnessapp.service.UserService;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -29,7 +31,8 @@ public class UserController {
     private OTPService otpService;
 
     @PostMapping("/sendotp")
-    public ResponseEntity<String> sendOTP(String email) {
+    public ResponseEntity<String> sendOTP(@RequestBody Map<String, Object> requestBody) {
+        String email = (String) requestBody.get("email");
         String otp = otpService.generateOTP();
         otpService.storeOTP(email, otp);
         emailService.sendOTP(email, otp);
@@ -37,7 +40,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestParam("email") String email, @RequestParam("otp") String otp) {
+    public ResponseEntity<String> loginUser(@RequestBody Map<String, Object> requestBody) {
+        String email = (String) requestBody.get("email");
+        String otp = (String) requestBody.get("otp");
         User existingUser = userService.getUserByEmail(email);
         if (otpService.verifyOTP(email, otp)) {
             if (existingUser != null) {
