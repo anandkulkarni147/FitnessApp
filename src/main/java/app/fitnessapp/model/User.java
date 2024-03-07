@@ -40,7 +40,7 @@ public class User {
     public User() {
 
     }
-    public User(String firstName, String lastName, String email, String birthdate, String country, String city, String state, String weight, String heightFt, String heightIn, String fitnessGoals, String healthHistory) {
+    public User(String firstName, String lastName, String email, String birthdate, String country, String city, String state, String weight, String heightFt, String heightIn) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -51,7 +51,6 @@ public class User {
         this.weight = weight;
         this.heightFt = heightFt;
         this.heightIn = heightIn;
-        this.healthHistory = healthHistory;
     }
 
     public String getWeight() {
