@@ -29,7 +29,10 @@ public class User {
     @Column(name = "weight")
     private String weight;
     @Column(name = "height")
-    private String height;
+    private String heightFt;
+
+    @Column(name = "height")
+    private String heightIn;
 
     @Column(name = "healthHistory", columnDefinition = "TEXT")
     private String healthHistory;
@@ -37,7 +40,7 @@ public class User {
     public User() {
 
     }
-    public User(String firstName, String lastName, String email, String birthdate, String country, String city, String state, String weight, String height, String fitnessGoals, String healthHistory) {
+    public User(String firstName, String lastName, String email, String birthdate, String country, String city, String state, String weight, String heightFt, String heightIn, String fitnessGoals, String healthHistory) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -46,7 +49,8 @@ public class User {
         this.city = city;
         this.state = state;
         this.weight = weight;
-        this.height = height;
+        this.heightFt = heightFt;
+        this.heightIn = heightIn;
         this.healthHistory = healthHistory;
     }
 
@@ -58,12 +62,20 @@ public class User {
         this.weight = weight;
     }
 
-    public String getHeight() {
-        return height;
+    public String getHeightFt() {
+        return heightFt;
     }
 
-    public void setHeight(String height) {
-        this.height = height;
+    public void setHeightFt(String heightFt) {
+        this.heightFt = heightFt;
+    }
+
+    public String getHeightIn() {
+        return heightIn;
+    }
+
+    public void setHeightIn(String heightIn) {
+        this.heightIn = heightIn;
     }
 
     public String getCity() {
