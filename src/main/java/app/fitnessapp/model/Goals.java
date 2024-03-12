@@ -1,7 +1,5 @@
 package app.fitnessapp.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.persistence.*;
 
 @Entity
@@ -22,13 +20,27 @@ public class Goals {
     private String activity;
 
     @Column(name = "goalTarget")
-    private String lastName;
+    private Integer target;
     @Column(name = "email")
     private String email;
     @Column(name = "progress")
-    private String progress = "";
+    private Integer progress;
     @Column(name = "daysleft")
-    private String daysleft = "";
+    private Integer daysleft;
+
+    public Goals() {
+
+    }
+
+    public Goals(String goal, String goalType, String activity, Integer target, String email, Integer progress, Integer daysleft) {
+        this.goal = goal;
+        this.goalType = goalType;
+        this.activity = activity;
+        this.target = target;
+        this.email = email;
+        this.progress = progress;
+        this.daysleft = daysleft;
+    }
 
     public Long getId() {
         return id;
@@ -62,12 +74,12 @@ public class Goals {
         this.activity = activity;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Integer getTarget() {
+        return target;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setTarget(Integer target) {
+        this.target = target;
     }
 
     public String getEmail() {
@@ -78,19 +90,19 @@ public class Goals {
         this.email = email;
     }
 
-    public String getProgress() {
+    public Integer getProgress() {
         return progress;
     }
 
-    public void setProgress(String progress) {
+    public void setProgress(Integer progress) {
         this.progress = progress;
     }
 
-    public String getDaysleft() {
+    public Integer getDaysleft() {
         return daysleft;
     }
 
-    public void setDaysleft(String daysleft) {
+    public void setDaysleft(Integer daysleft) {
         this.daysleft = daysleft;
     }
 }

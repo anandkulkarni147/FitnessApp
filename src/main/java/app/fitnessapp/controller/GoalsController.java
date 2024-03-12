@@ -1,13 +1,17 @@
 package app.fitnessapp.controller;
 
 import app.fitnessapp.model.Goals;
-import app.fitnessapp.model.User;
 import app.fitnessapp.service.GoalsService;
-import app.fitnessapp.service.UserService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -18,21 +22,41 @@ public class GoalsController {
     private GoalsService goalsService;
 
     @PostMapping("/goals")
-    public ResponseEntity<String> setGoals(@RequestBody Goals goals) {
+    public ResponseEntity<String> setGoals(@RequestBody Map<String, Object> requestBody) {
         try {
-            goalsService.saveUserGoals(goals);
-            return new ResponseEntity<>("Set user goals", HttpStatus.CREATED);
+            String goal = (String) requestBody.get("goal");
+            String activity = (String) requestBody.get("activity");
+            String goalType = (String) requestBody.get("goalType");
+            int goalTarget = (Integer) requestBody.get("goalTarget");
+            String email = (String) requestBody.get("email");
+            Goals userGoals = new Goals(goal, goalType, activity, goalTarget, email, 0, 0);
+            goalsService.saveUserGoals(userGoals);
+            return new ResponseEntity<>("ok", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("Failed to register user", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("exit", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/goals")
-    public ResponseEntity<String> getGoals(@RequestParam("email") String email) {
+    public ResponseEntity<Map<String, Object>> getGoals(@RequestParam("email") String email) {
         try {
-            return new ResponseEntity<>("", HttpStatus.OK);
+            List<Goals> l = goalsService.getAllGoalsByEmail(email);
+            l.stream().filter(goal -> goal.getEmail().equals(email)).collect(Collectors.toList());
+            JSONObject goalsJson = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
+            l.forEach(e -> {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("activity", e.getActivity());
+                jsonObject.put("goalType", e.getGoalType());
+                jsonObject.put("goalTarget", e.getTarget());
+                jsonObject.put("progress", e.getProgress());
+                jsonObject.put("daysLeft", e.getDaysleft());
+                jsonArray.put(jsonObject);
+            });
+            goalsJson.put("goals", jsonArray);
+            return new ResponseEntity<>(goalsJson.toMap(), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Failed to register user", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 }

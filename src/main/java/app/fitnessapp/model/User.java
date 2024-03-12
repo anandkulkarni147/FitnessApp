@@ -17,7 +17,7 @@ public class User {
     private String lastName;
     @Column(name = "email")
     private String email;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "birthdate")
     private String birthdate;
     @Column(name = "country")
@@ -37,6 +37,7 @@ public class User {
     public User() {
 
     }
+
     public User(String firstName, String lastName, String email, String birthdate, String country, String city, String state, String weight, String heightFt, String heightIn) {
         this.firstName = firstName;
         this.lastName = lastName;

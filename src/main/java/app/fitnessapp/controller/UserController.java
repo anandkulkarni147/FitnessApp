@@ -4,12 +4,11 @@ import app.fitnessapp.model.User;
 import app.fitnessapp.service.EmailService;
 import app.fitnessapp.service.OTPService;
 import app.fitnessapp.service.UserService;
-import com.google.gson.JsonObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 
@@ -47,7 +46,7 @@ public class UserController {
         if (otpService.verifyOTP(email, otp)) {
             if (existingUser != null) {
                 // OTP verification successful
-                return new ResponseEntity<>("Login successful", HttpStatus.OK);
+                return new ResponseEntity<>("ok", HttpStatus.OK);
             } else {
                 // User does not exist
                 return new ResponseEntity<>("Invalid email or OTP", HttpStatus.NOT_FOUND);
@@ -62,7 +61,7 @@ public class UserController {
     public ResponseEntity<String> registerUser(@RequestBody User user) {
         try {
             userService.saveUserDetails(user);
-            return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>("ok", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to register user", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -74,15 +73,4 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-//    @GetMapping("/{userId}/healthhistory")
-//    public ResponseEntity<String> getUserMedicalData(@PathVariable Long userId) throws Exception {
-//        User user = userService.getUserById(userId);
-//        return new ResponseEntity<>(objectMapper.writeValueAsString(user.getHealthHistory()), HttpStatus.OK);
-//    }
-
-//    @GetMapping("/healthhistory")
-//    public ResponseEntity<String> getMedicalData(@PathVariable Long id) throws Exception {
-//        HealthHistory healthHistory = new HealthHistory();
-//        return new ResponseEntity<>(objectMapper.writeValueAsString(healthHistory.getHealthHistoryMap()), HttpStatus.OK);
-//    }
 }

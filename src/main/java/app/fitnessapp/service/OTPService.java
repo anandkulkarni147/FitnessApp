@@ -1,6 +1,7 @@
 package app.fitnessapp.service;
 
 import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -8,7 +9,7 @@ import java.util.Random;
 @Service
 public class OTPService {
 
-    private Map<String, String> otpMap = new HashMap<>();
+    private final Map<String, String> otpMap = new HashMap<>();
 
     public String generateOTP() {
         Random random = new Random();
