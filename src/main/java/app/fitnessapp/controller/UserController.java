@@ -35,7 +35,7 @@ public class UserController {
         String otp = otpService.generateOTP();
         otpService.storeOTP(email, otp);
         emailService.sendOTP(email, otp);
-        return new ResponseEntity<>("OTP sent successfully", HttpStatus.OK);
+        return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
     @PostMapping("/login")
