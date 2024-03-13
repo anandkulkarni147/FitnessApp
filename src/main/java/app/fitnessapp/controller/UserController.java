@@ -4,7 +4,6 @@ import app.fitnessapp.model.User;
 import app.fitnessapp.service.EmailService;
 import app.fitnessapp.service.OTPService;
 import app.fitnessapp.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +18,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Autowired
     private EmailService emailService;
