@@ -29,7 +29,7 @@ public class RecommendationController {
         return (double) tmp / factor;
     }
 
-        @GetMapping("/recommendations")
+    @GetMapping("/recommendations")
     public ResponseEntity<Map<String, Object>> generateRecommendation(@RequestParam String email) {
         try {
             User user = userService.getUserByEmail(email);
