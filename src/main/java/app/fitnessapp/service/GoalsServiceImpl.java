@@ -4,6 +4,7 @@ import app.fitnessapp.model.Goals;
 import app.fitnessapp.repository.GoalsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service("goalsService")
